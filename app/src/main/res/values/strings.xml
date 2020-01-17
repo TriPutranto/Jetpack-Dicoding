@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">JetpackDicoding</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="tab_text_1">Movies</string>
+    <string name="tab_text_2">TvShows</string>
+    <string name="poster">poster</string>
+    <string name="img_description">Image Details</string>
+    <string name="lorem"><![CDATA[<string name=\"lorem\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dalam rangka untuk membiayai dirinya sendiri. Setiap wortel ....</string>]]></string>
+    <string name="year">2020</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="image_logo">Image Logo</string>
+</resources>
