@@ -32,11 +32,4 @@ class SingleFragmentActivity : AppCompatActivity() {
             .add(R.id.container, fragment, "TEST")
             .commit()
     }
-
-    fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.container, fragment)
-            .commit()
-    }
 }

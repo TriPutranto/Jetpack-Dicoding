@@ -8,7 +8,7 @@ import com.triputranto.jetpackdicoding.R
 import com.triputranto.jetpackdicoding.base.BaseActivity
 import com.triputranto.jetpackdicoding.data.model.Result
 import com.triputranto.jetpackdicoding.ui.details.DetailsViewModel
-import com.triputranto.jetpackdicoding.utils.Utils
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.KEY_MOVIE
 import kotlinx.android.synthetic.main.activity_details_movie.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class DetailsMovieActivity : BaseActivity() {
 
     private val idMovie by lazy {
-        intent.getIntExtra(Utils.KEY_MOVIE, 0)
+        intent.getIntExtra(KEY_MOVIE, 0)
     }
 
     private val detailsViewModel by lazy {
