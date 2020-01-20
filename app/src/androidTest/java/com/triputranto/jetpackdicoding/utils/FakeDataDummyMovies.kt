@@ -7,7 +7,7 @@ import com.triputranto.jetpackdicoding.data.model.Result
  * Created by Ahmad Tri Putranto on 18/01/2020.
  * */
 object FakeDataDummyMovies {
-    fun getAllMovies(): List<Result> {
+    private fun getAllMovies(): List<Result> {
         return listOf(
             Result(
                 1,

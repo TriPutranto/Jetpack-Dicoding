@@ -20,7 +20,7 @@ class DetailsMovieActivityTest {
     private val dummyResult = FakeDataDummyMovies.getMovieById(5)
 
     @get:Rule
-    var activityRule: ActivityTestRule<DetailsMovieActivity> =
+    val activityRule: ActivityTestRule<DetailsMovieActivity> =
         object : ActivityTestRule<DetailsMovieActivity>(DetailsMovieActivity::class.java) {
             override fun getActivityIntent(): Intent {
                 val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
@@ -38,5 +38,7 @@ class DetailsMovieActivityTest {
         onView(withId(tv_overview)).check(matches(withText(dummyResult?.overview)))
         onView(withId(tv_date)).check(matches(isDisplayed()))
         onView(withId(tv_date)).check(matches(withText(dummyResult?.date)))
+        onView(withId(img_poster)).check(matches(isDisplayed()))
+        onView(withId(rb_rate)).check(matches(isDisplayed()))
     }
 }

@@ -7,7 +7,7 @@ import com.triputranto.jetpackdicoding.data.model.Result
  * Created by Ahmad Tri Putranto on 18/01/2020.
  * */
 object FakeDataDummyTvShows {
-    fun getAllTvShows(): List<Result> {
+    private fun getAllTvShows(): List<Result> {
         return listOf(
             Result(
                 1,

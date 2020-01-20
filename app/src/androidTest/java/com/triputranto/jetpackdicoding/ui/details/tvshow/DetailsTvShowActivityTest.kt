@@ -38,5 +38,7 @@ class DetailsTvShowActivityTest {
         onView(withId(tv_overview)).check(matches(withText(dummyResult?.overview)))
         onView(withId(tv_date)).check(matches(isDisplayed()))
         onView(withId(tv_date)).check(matches(withText(dummyResult?.date)))
+        onView(withId(img_poster)).check(matches(isDisplayed()))
+        onView(withId(rb_rate)).check(matches(isDisplayed()))
     }
 }
