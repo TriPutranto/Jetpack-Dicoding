@@ -2,8 +2,8 @@ package com.triputranto.jetpackdicoding.ui.details
 
 import androidx.lifecycle.ViewModel
 import com.triputranto.jetpackdicoding.data.model.Result
-import com.triputranto.jetpackdicoding.data.source.movies.DataDummyMovies
-import com.triputranto.jetpackdicoding.data.source.tvshows.DataDummyTvShows
+import com.triputranto.jetpackdicoding.data.source.local.movies.DataDummyMovies
+import com.triputranto.jetpackdicoding.data.source.local.tvshows.DataDummyTvShows
 
 /**
  * Created by Ahmad Tri Putranto on 18/01/2020.

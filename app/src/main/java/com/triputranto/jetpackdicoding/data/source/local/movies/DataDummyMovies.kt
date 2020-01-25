@@ -1,4 +1,4 @@
-package com.triputranto.jetpackdicoding.data.source.movies
+package com.triputranto.jetpackdicoding.data.source.local.movies
 
 import com.triputranto.jetpackdicoding.R
 import com.triputranto.jetpackdicoding.data.model.Result

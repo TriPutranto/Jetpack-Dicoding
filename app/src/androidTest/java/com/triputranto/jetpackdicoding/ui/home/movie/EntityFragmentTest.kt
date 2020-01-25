@@ -15,7 +15,7 @@ import org.junit.Test
 /**
  * Created by Ahmad Tri Putranto on 18/01/2020.
  * */
-class MovieFragmentTest {
+class EntityFragmentTest {
 
     private val moviesFragment = MovieFragment()
 
