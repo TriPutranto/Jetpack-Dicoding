@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.triputranto.jetpackdicoding.base
 
 import android.annotation.SuppressLint
@@ -5,6 +7,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.triputranto.jetpackdicoding.R
 
 /**
@@ -22,4 +26,7 @@ open class BaseActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }
+
+    fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
+        ViewModelProviders.of(this).get(viewModelClass)
 }

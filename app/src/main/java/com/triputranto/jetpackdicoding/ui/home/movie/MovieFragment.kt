@@ -9,9 +9,8 @@ import com.triputranto.jetpackdicoding.base.BaseFragment
 import com.triputranto.jetpackdicoding.ui.adapter.HomeAdapter
 import com.triputranto.jetpackdicoding.ui.details.movie.DetailsMovieActivity
 import com.triputranto.jetpackdicoding.utils.Utils.Companion.KEY_MOVIE
-import com.triputranto.jetpackdicoding.utils.gone
-import com.triputranto.jetpackdicoding.utils.obtainViewModel
-import com.triputranto.jetpackdicoding.utils.visible
+import com.triputranto.jetpackdicoding.utils.hide
+import com.triputranto.jetpackdicoding.utils.show
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -46,21 +45,14 @@ class MovieFragment : BaseFragment(R.layout.fragment_movie) {
     private fun setupObserver() {
         mViewModel.apply {
             getMovies().observe(viewLifecycleOwner, Observer {
-                rv_movie.visible()
+                rv_movie.show()
                 adapter.setContentList(it)
             })
-
-            eventGlobalMessage.observe(this@MovieFragment, Observer {
-                if (it != null) {
-                    rv_movie.gone()
-                }
-            })
-
-            eventShowProgress.observe(this@MovieFragment, Observer {
+            eventShowProgress.observe(viewLifecycleOwner, Observer {
                 if (it == true) {
-                    pg_movie.visible()
+                    pg_movie.show()
                 } else {
-                    pg_movie.gone()
+                    pg_movie.hide()
                 }
             })
         }
@@ -78,5 +70,4 @@ class MovieFragment : BaseFragment(R.layout.fragment_movie) {
     }
 
     private fun obtainVm(): MovieViewModel = obtainViewModel(MovieViewModel::class.java)
-
 }

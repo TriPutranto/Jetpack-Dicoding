@@ -1,51 +1,85 @@
 package com.triputranto.jetpackdicoding.ui.details.movie
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.triputranto.jetpackdicoding.R
 import com.triputranto.jetpackdicoding.base.BaseActivity
-import com.triputranto.jetpackdicoding.data.model.Result
+import com.triputranto.jetpackdicoding.data.model.Entity
 import com.triputranto.jetpackdicoding.ui.details.DetailsViewModel
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.IMAGE_URL
 import com.triputranto.jetpackdicoding.utils.Utils.Companion.KEY_MOVIE
+import com.triputranto.jetpackdicoding.utils.createCircularProgressDrawable
+import com.triputranto.jetpackdicoding.utils.hide
+import com.triputranto.jetpackdicoding.utils.show
 import kotlinx.android.synthetic.main.activity_details_movie.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Created by Ahmad Tri Putranto on 18/01/2020.
  * */
 class DetailsMovieActivity : BaseActivity() {
 
-    private val idMovie by lazy {
-        intent.getIntExtra(KEY_MOVIE, 0)
-    }
-
-    private val detailsViewModel by lazy {
-        ViewModelProviders.of(this).get(DetailsViewModel::class.java)
-    }
+    private lateinit var detailsViewModel: DetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details_movie)
         setupToolbar(toolbar)
-        showDetails(detailsViewModel.getDetailsMovie(idMovie))
+        setupViewModel()
+        getData()
     }
 
-    private fun showDetails(movie: Result?) {
+    private fun setupViewModel() {
+        detailsViewModel = obtainVm()
+        setupObserver()
+    }
+
+    private fun setupObserver() {
+        detailsViewModel.apply {
+            getDataMovie().observe(this@DetailsMovieActivity, Observer {
+                showDetails(it)
+            })
+            eventShowProgress.observe(this@DetailsMovieActivity, Observer {
+                if (it == true) {
+                    pg_movie.show()
+                } else {
+                    pg_movie.hide()
+                }
+            })
+        }
+    }
+
+    private fun getData() {
+        intent.getIntExtra(KEY_MOVIE, 0).let {
+            CoroutineScope(Dispatchers.Main).launch {
+                detailsViewModel.getDetailMovie(it)
+            }
+        }
+    }
+
+    private fun showDetails(movie: Entity?) {
         Glide.with(this)
-            .load(movie?.image)
-            .placeholder(R.drawable.ic_broken_image_black_24dp)
-            .transition(DrawableTransitionOptions.withCrossFade())
+            .load(IMAGE_URL + movie?.poster_path)
+            .thumbnail(0.2f)
+            .placeholder(createCircularProgressDrawable(this))
+            .transition(withCrossFade())
+            .error(R.drawable.ic_broken_image_green)
             .into(img_poster)
 
-        val rating = movie?.rating?.div(20)
+        val rating = movie?.vote_average?.div(2)
         if (rating != null) {
             rb_rate.rating = rating.toFloat()
         }
 
         tv_name.text = movie?.title
         tv_overview.text = movie?.overview
-        tv_date.text = movie?.date
+        tv_date.text = movie?.release_date
     }
+
+    private fun obtainVm(): DetailsViewModel = obtainViewModel(DetailsViewModel::class.java)
 }

@@ -28,4 +28,24 @@ class RemoteDataSource {
             callback.onFailed(e.message)
         }
     }
+
+    suspend fun getMovieById(movieId: Int, callback: DataSource.GetDataByIdCallback) {
+        try {
+            mApiService.getMovieByIdAsync(movieId).await().let {
+                callback.onSuccess(it)
+            }
+        } catch (e: Exception) {
+            callback.onFailed(e.message)
+        }
+    }
+
+    suspend fun getTvShowById(tvId: Int, callback: DataSource.GetDataByIdCallback) {
+        try {
+            mApiService.getTvShowByIdAsync(tvId).await().let {
+                callback.onSuccess(it)
+            }
+        } catch (e: Exception) {
+            callback.onFailed(e.message)
+        }
+    }
 }

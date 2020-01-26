@@ -27,6 +27,12 @@
                 android:scaleType="fitXY"
                 tools:srcCompat="@tools:sample/avatars[11]" />
 
+            <ProgressBar
+                android:id="@+id/pg_tv_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

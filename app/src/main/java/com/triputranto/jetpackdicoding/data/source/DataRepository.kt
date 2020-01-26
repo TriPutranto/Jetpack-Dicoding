@@ -34,6 +34,32 @@ class DataRepository : DataSource {
 
         })
     }
+
+    suspend fun getMovieById(movieId: Int, callback: DataSource.GetDataByIdCallback) {
+        remoteDataSource.getMovieById(movieId, object : DataSource.GetDataByIdCallback {
+            override fun onSuccess(data: Entity) {
+                callback.onSuccess(data)
+            }
+
+            override fun onFailed(errorMessage: String?) {
+                callback.onFailed(errorMessage)
+            }
+
+        })
+    }
+
+    suspend fun getTvShowById(tvId: Int, callback: DataSource.GetDataByIdCallback) {
+        remoteDataSource.getTvShowById(tvId, object : DataSource.GetDataByIdCallback {
+            override fun onSuccess(data: Entity) {
+                callback.onSuccess(data)
+            }
+
+            override fun onFailed(errorMessage: String?) {
+                callback.onFailed(errorMessage)
+            }
+
+        })
+    }
 }
 
 
