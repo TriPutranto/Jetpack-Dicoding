@@ -38,7 +38,7 @@ class MovieFragment : BaseFragment(R.layout.fragment_movie) {
 
     private fun getData() {
         CoroutineScope(Main).launch {
-            mViewModel.getAllMovie()
+            mViewModel.getAllMovies()
         }
     }
 
