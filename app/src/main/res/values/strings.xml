@@ -10,4 +10,10 @@
     <string name="year">2020</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="image_logo">Image Logo</string>
+    <string name="movies">Movie</string>
+    <string name="tv_show">Tv Show</string>
+    <string name="favorite">Favorite</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

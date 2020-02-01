@@ -24,6 +24,10 @@ class MovieFragment : BaseFragment(R.layout.fragment_movie) {
     private lateinit var mViewModel: MovieViewModel
     private lateinit var adapter: HomeAdapter
 
+    companion object {
+        fun newInstance() = MovieFragment()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()

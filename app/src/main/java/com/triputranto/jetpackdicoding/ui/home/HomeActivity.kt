@@ -2,8 +2,13 @@ package com.triputranto.jetpackdicoding.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.triputranto.jetpackdicoding.R
-import com.triputranto.jetpackdicoding.ui.adapter.ViewPagerAdapter
+import com.triputranto.jetpackdicoding.ui.home.favorite.FavoriteFragment
+import com.triputranto.jetpackdicoding.ui.home.movie.MovieFragment
+import com.triputranto.jetpackdicoding.ui.home.tvshow.TvShowFragment
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.KEY_FRAGMENT
 import kotlinx.android.synthetic.main.activity_home.*
 
 /**
@@ -11,11 +16,50 @@ import kotlinx.android.synthetic.main.activity_home.*
  * */
 class HomeActivity : AppCompatActivity() {
 
+    private var content: Fragment = MovieFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        view_pager.adapter = ViewPagerAdapter(this, supportFragmentManager)
-        tabs.setupWithViewPager(view_pager)
+        bottom_nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        if (savedInstanceState == null) {
+            loadFragment(content)
+        } else {
+            content = supportFragmentManager.getFragment(savedInstanceState, KEY_FRAGMENT)
+                ?: MovieFragment()
+            loadFragment(content)
+        }
+    }
+
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_movies -> {
+                    loadFragment(MovieFragment.newInstance())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_tv -> {
+                    loadFragment(TvShowFragment.newInstance())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_favorite -> {
+                    loadFragment(FavoriteFragment.newInstance())
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        }
+
+    private fun loadFragment(fragment: Fragment) {
+        content = fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fl_container, fragment)
+        transaction.commit()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        supportFragmentManager.putFragment(outState, KEY_FRAGMENT, content)
+        super.onSaveInstanceState(outState)
     }
 }

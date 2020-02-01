@@ -1,7 +1,7 @@
 package com.triputranto.jetpackdicoding.data.source.remote
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.triputranto.jetpackdicoding.BuildConfig
+import com.triputranto.jetpackdicoding.BuildConfig.API_KEY
 import com.triputranto.jetpackdicoding.BuildConfig.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,7 +17,7 @@ object ApiService {
         val url = chain.request()
             .url
             .newBuilder()
-            .addQueryParameter("api_key", BuildConfig.API_KEY)
+            .addQueryParameter("api_key", API_KEY)
             .build()
 
         val request = chain.request()

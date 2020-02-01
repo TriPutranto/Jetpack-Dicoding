@@ -24,6 +24,10 @@ class TvShowFragment : BaseFragment(R.layout.fragment_tv_show) {
     private lateinit var mViewModel: TvShowViewModel
     private lateinit var adapter: HomeAdapter
 
+    companion object {
+        fun newInstance() = TvShowFragment()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
