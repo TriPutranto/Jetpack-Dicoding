@@ -1,6 +1,9 @@
 package com.triputranto.jetpackdicoding.ui.details.movie
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -18,6 +21,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 /**
  * Created by Ahmad Tri Putranto on 18/01/2020.
@@ -25,6 +29,8 @@ import kotlinx.coroutines.launch
 class DetailsMovieActivity : BaseActivity() {
 
     private lateinit var detailsViewModel: DetailsViewModel
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +85,30 @@ class DetailsMovieActivity : BaseActivity() {
         tv_name.text = movie?.title
         tv_overview.text = movie?.overview
         tv_date.text = movie?.release_date
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuItem = menu
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        setFavorite()
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if (id == R.id.action_favorite) {
+            toast("sukses")
+            setFavorite()
+        }
+        return true
+    }
+
+    private fun setFavorite() {
+        if (isFavorite) {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorited)
+        } else {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite)
+        }
     }
 
     private fun obtainVm(): DetailsViewModel = obtainViewModel(DetailsViewModel::class.java)
