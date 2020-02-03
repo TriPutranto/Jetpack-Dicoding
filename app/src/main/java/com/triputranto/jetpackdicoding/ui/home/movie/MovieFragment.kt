@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.triputranto.jetpackdicoding.R
 import com.triputranto.jetpackdicoding.base.BaseFragment
-import com.triputranto.jetpackdicoding.ui.adapter.HomeAdapter
 import com.triputranto.jetpackdicoding.ui.details.movie.DetailsMovieActivity
+import com.triputranto.jetpackdicoding.ui.home.HomeAdapter
 import com.triputranto.jetpackdicoding.utils.Utils.Companion.KEY_MOVIE
 import com.triputranto.jetpackdicoding.utils.hide
 import com.triputranto.jetpackdicoding.utils.show

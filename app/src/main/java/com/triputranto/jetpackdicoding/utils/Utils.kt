@@ -1,5 +1,7 @@
 package com.triputranto.jetpackdicoding.utils
 
+import com.triputranto.jetpackdicoding.R
+
 /**
  * Created by Ahmad Tri Putranto on 18/01/2020.
  * */
@@ -16,7 +18,14 @@ class Utils {
 
         //load
         const val FIRST_PAGE = 1
+        const val PAGE_SIZE = 4
         const val IMAGE_URL = "https://image.tmdb.org/t/p/original"
+
+        //view_pager
+        val TAB_TITLES = arrayOf(
+            R.string.tab_text_1,
+            R.string.tab_text_2
+        )
 
         //room
         const val TABLE_NAME = "movie"

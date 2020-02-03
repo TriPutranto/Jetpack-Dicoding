@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.triputranto.jetpackdicoding.R
-import com.triputranto.jetpackdicoding.ui.home.favorite.FavoriteFragment
+import com.triputranto.jetpackdicoding.ui.home.favorite.ParentFavoriteFragment
 import com.triputranto.jetpackdicoding.ui.home.movie.MovieFragment
 import com.triputranto.jetpackdicoding.ui.home.tvshow.TvShowFragment
 import com.triputranto.jetpackdicoding.utils.Utils.Companion.KEY_FRAGMENT
@@ -44,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_favorite -> {
-                    loadFragment(FavoriteFragment.newInstance())
+                    loadFragment(ParentFavoriteFragment.newInstance())
                     return@OnNavigationItemSelectedListener true
                 }
             }

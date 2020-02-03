@@ -1,4 +1,4 @@
-package com.triputranto.jetpackdicoding.ui.adapter
+package com.triputranto.jetpackdicoding.ui.home
 
 import android.content.Context
 import android.view.View
