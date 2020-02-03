@@ -63,8 +63,8 @@ class TvShowFragment : BaseFragment(R.layout.fragment_tv_show) {
     }
 
     private fun setupRecycler() {
-        adapter = HomeAdapter { idMovie ->
-            context?.startActivity<DetailsTvShowActivity>(KEY_TV_SHOW to idMovie)
+        adapter = HomeAdapter { idTvShow ->
+            context?.startActivity<DetailsTvShowActivity>(KEY_TV_SHOW to idTvShow)
         }
         rv_tv_show.let {
             it.adapter = adapter

@@ -31,6 +31,7 @@ class DetailsMovieActivity : BaseActivity() {
     private lateinit var detailsViewModel: DetailsViewModel
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
+    private lateinit var entity: Entity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,14 @@ class DetailsMovieActivity : BaseActivity() {
         setupToolbar(toolbar)
         setupViewModel()
         getData()
+    }
+
+    private fun getData() {
+        intent.getIntExtra(KEY_MOVIE, 0).let {
+            CoroutineScope(Dispatchers.Main).launch {
+                detailsViewModel.getDetailMovie(it)
+            }
+        }
     }
 
     private fun setupViewModel() {
@@ -49,6 +58,10 @@ class DetailsMovieActivity : BaseActivity() {
         detailsViewModel.apply {
             getDataMovie().observe(this@DetailsMovieActivity, Observer {
                 showDetails(it)
+                entity = it
+                isFavorite = detailsViewModel.checkFavorite(it?.id ?: 0)
+                setFavorite()
+                menuItem?.getItem(0)?.isVisible = true
             })
             eventShowProgress.observe(this@DetailsMovieActivity, Observer {
                 if (it == true) {
@@ -57,15 +70,42 @@ class DetailsMovieActivity : BaseActivity() {
                     pg_movie.hide()
                 }
             })
+            eventGlobalMessage.observe(this@DetailsMovieActivity, Observer {
+                toast(it)
+            })
+
+            checkFavorite.observe(this@DetailsMovieActivity, Observer {
+                if (it == true) {
+                    toast(R.string.save)
+                } else {
+                    toast(R.string.remove)
+                }
+            })
         }
     }
 
-    private fun getData() {
-        intent.getIntExtra(KEY_MOVIE, 0).let {
-            CoroutineScope(Dispatchers.Main).launch {
-                detailsViewModel.getDetailMovie(it)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        menuItem = menu
+        menu?.getItem(0)?.isVisible = false
+        setFavorite()
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+            R.id.action_favorite -> {
+                if (isFavorite) {
+                    detailsViewModel.removeFavorite(entity.id ?: 0)
+                } else {
+                    detailsViewModel.addToFavorite(entity)
+                }
+                isFavorite = detailsViewModel.checkFavorite(entity.id ?: 0)
+                setFavorite()
             }
         }
+        return true
     }
 
     private fun showDetails(movie: Entity?) {
@@ -85,22 +125,6 @@ class DetailsMovieActivity : BaseActivity() {
         tv_name.text = movie?.title
         tv_overview.text = movie?.overview
         tv_date.text = movie?.release_date
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuItem = menu
-        menuInflater.inflate(R.menu.detail_menu, menu)
-        setFavorite()
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.action_favorite) {
-            toast("sukses")
-            setFavorite()
-        }
-        return true
     }
 
     private fun setFavorite() {

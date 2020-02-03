@@ -1,18 +1,58 @@
 package com.triputranto.jetpackdicoding.data.model
 
+import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_CATEGORY
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_FIRST_RELEASE_DATE
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_ID
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_ID_MOVIE
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_NAME
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_OVERVIEW
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_POSTER_PATH
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_RELEASE_DATE
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_TITLE
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.COLUMN_VOTE_AVERAGE
+import com.triputranto.jetpackdicoding.utils.Utils.Companion.TABLE_NAME
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by Ahmad Tri Putranto on 26/01/2020.
  * */
+@Entity(tableName = TABLE_NAME)
+@Parcelize
 data class Entity(
-    @SerializedName("id") var id: Int?,
-    @SerializedName("title") var title: String?,
-    @SerializedName("name") var name: String?,
-    @SerializedName("poster_path") var poster_path: String?,
-    @SerializedName("backdrop_path") var backdrop_path: String?,
-    @SerializedName("release_date") var release_date: String?,
-    @SerializedName("first_air_date") var first_air_date: String?,
-    @SerializedName("vote_average") var vote_average: Float?,
-    @SerializedName("overview") var overview: String?
-)
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = COLUMN_ID_MOVIE)
+    var idMovie: Int? = 0,
+
+    @ColumnInfo(name = COLUMN_ID)
+    @SerializedName("id")
+    var id: Int? = 0,
+
+    @ColumnInfo(name = COLUMN_TITLE)
+    var title: String? = "",
+
+    @ColumnInfo(name = COLUMN_NAME)
+    var name: String? = "",
+
+    @ColumnInfo(name = COLUMN_OVERVIEW)
+    var overview: String? = "",
+
+    @ColumnInfo(name = COLUMN_POSTER_PATH)
+    var poster_path: String? = "",
+
+    @ColumnInfo(name = COLUMN_RELEASE_DATE)
+    var release_date: String? = "",
+
+    @ColumnInfo(name = COLUMN_FIRST_RELEASE_DATE)
+    var first_air_date: String? = "",
+
+    @ColumnInfo(name = COLUMN_VOTE_AVERAGE)
+    var vote_average: Double? = 0.0,
+
+    @ColumnInfo(name = COLUMN_CATEGORY)
+    var category: Int
+) : Parcelable

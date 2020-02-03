@@ -1,6 +1,7 @@
 package com.triputranto.jetpackdicoding.ui.details.tvshow
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 /**
  * Created by Ahmad Tri Putranto on 18/01/2020.
@@ -25,6 +27,9 @@ import kotlinx.coroutines.launch
 class DetailsTvShowActivity : BaseActivity() {
 
     private lateinit var detailsViewModel: DetailsViewModel
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
+    private lateinit var entity: Entity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class DetailsTvShowActivity : BaseActivity() {
     private fun setupViewModel() {
         detailsViewModel = obtainVm()
         setupObserver()
+        getData()
     }
 
     private fun setupObserver() {
@@ -49,6 +55,9 @@ class DetailsTvShowActivity : BaseActivity() {
                     pg_tv_show.show()
                 } else
                     pg_tv_show.hide()
+            })
+            eventGlobalMessage.observe(this@DetailsTvShowActivity, Observer {
+                toast(it)
             })
         }
     }
