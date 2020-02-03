@@ -41,14 +41,6 @@ class DetailsMovieActivity : BaseActivity() {
         getData()
     }
 
-    private fun getData() {
-        intent.getIntExtra(KEY_MOVIE, 0).let {
-            CoroutineScope(Dispatchers.Main).launch {
-                detailsViewModel.getDetailMovie(it)
-            }
-        }
-    }
-
     private fun setupViewModel() {
         detailsViewModel = obtainVm()
         setupObserver()
@@ -132,6 +124,14 @@ class DetailsMovieActivity : BaseActivity() {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorited)
         } else {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite)
+        }
+    }
+
+    private fun getData() {
+        intent.getIntExtra(KEY_MOVIE, 0).let {
+            CoroutineScope(Dispatchers.Main).launch {
+                detailsViewModel.getDetailMovie(it)
+            }
         }
     }
 

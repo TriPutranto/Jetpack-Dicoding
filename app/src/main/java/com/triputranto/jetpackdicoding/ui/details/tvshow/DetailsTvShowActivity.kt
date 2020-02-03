@@ -2,6 +2,8 @@ package com.triputranto.jetpackdicoding.ui.details.tvshow
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -49,6 +51,10 @@ class DetailsTvShowActivity : BaseActivity() {
         detailsViewModel.apply {
             getDataTvShow().observe(this@DetailsTvShowActivity, Observer {
                 showDetails(it)
+                entity = it
+                isFavorite = detailsViewModel.checkFavorite(it?.id ?: 0)
+                setFavorite()
+                menuItem?.getItem(0)?.isVisible = true
             })
             eventShowProgress.observe(this@DetailsTvShowActivity, Observer {
                 if (it == true) {
@@ -59,15 +65,38 @@ class DetailsTvShowActivity : BaseActivity() {
             eventGlobalMessage.observe(this@DetailsTvShowActivity, Observer {
                 toast(it)
             })
+            checkFavorite.observe(this@DetailsTvShowActivity, Observer {
+                if (it == true) {
+                    toast(R.string.save)
+                } else {
+                    toast(R.string.remove)
+                }
+            })
         }
     }
 
-    private fun getData() {
-        intent.getIntExtra(KEY_TV_SHOW, 0).let {
-            CoroutineScope(Main).launch {
-                detailsViewModel.getDetailTvShow(it)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        menuItem = menu
+        menu?.getItem(0)?.isVisible = false
+        setFavorite()
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+            R.id.action_favorite -> {
+                if (isFavorite) {
+                    detailsViewModel.removeFavorite(entity.id ?: 0)
+                } else {
+                    detailsViewModel.addToFavorite(entity)
+                }
+                isFavorite = detailsViewModel.checkFavorite(entity.id ?: 0)
+                setFavorite()
             }
         }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showDetails(tvShow: Entity?) {
@@ -87,6 +116,22 @@ class DetailsTvShowActivity : BaseActivity() {
         tv_name.text = tvShow?.name
         tv_overview.text = tvShow?.overview
         tv_date.text = tvShow?.first_air_date
+    }
+
+    private fun setFavorite() {
+        if (isFavorite) {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorited)
+        } else {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite)
+        }
+    }
+
+    private fun getData() {
+        intent.getIntExtra(KEY_TV_SHOW, 0).let {
+            CoroutineScope(Main).launch {
+                detailsViewModel.getDetailTvShow(it)
+            }
+        }
     }
 
     private fun obtainVm(): DetailsViewModel = obtainViewModel(DetailsViewModel::class.java)
