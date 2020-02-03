@@ -1,4 +1,4 @@
-package com.triputranto.jetpackdicoding.data.source.remote
+package com.triputranto.jetpackdicoding.data.source.remote.retrofit
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.triputranto.jetpackdicoding.BuildConfig.API_KEY

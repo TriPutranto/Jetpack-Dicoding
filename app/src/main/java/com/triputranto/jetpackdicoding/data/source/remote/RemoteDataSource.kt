@@ -1,6 +1,8 @@
 package com.triputranto.jetpackdicoding.data.source.remote
 
 import com.triputranto.jetpackdicoding.data.source.DataSource
+import com.triputranto.jetpackdicoding.data.source.remote.retrofit.ApiInterface
+import com.triputranto.jetpackdicoding.data.source.remote.retrofit.ApiService
 
 /**
  * Created by Ahmad Tri Putranto on 26/01/2020.

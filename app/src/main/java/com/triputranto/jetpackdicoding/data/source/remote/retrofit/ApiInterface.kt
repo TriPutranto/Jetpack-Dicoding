@@ -1,4 +1,4 @@
-package com.triputranto.jetpackdicoding.data.source.remote
+package com.triputranto.jetpackdicoding.data.source.remote.retrofit
 
 import com.triputranto.jetpackdicoding.base.BaseApiModel
 import com.triputranto.jetpackdicoding.data.model.Entity
